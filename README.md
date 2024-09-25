@@ -2,8 +2,6 @@
 
 A quick overview and a simple bash script to make your script output a little more lively
 
-- [Download source code - 2.7 KB](https://raw.githubusercontent.com/ChrisMaunder/How-to-Change-Text-Color-in-a-Linux-Terminal/master/docs/assets/color.zip)
-
 ## Introduction
 
 The default text output to a terminal is monochromatic and doesn't provide a simple method to provide context. For instance, you may want an error to appear in red, success in green, or important info to be output in bold.
@@ -41,13 +39,13 @@ and the reset code is **\033[0m**
 
 The format of the string for foreground color is:
 
-```cpp
+```bash
 "\033[" + "<0 or 1, meaning normal or bold>;" + "<color code> + "m"
 ```
 
 and for background:
 
-```cpp
+```bash
 "\033[" + "<color code>" + "m"
 ```
 
@@ -57,13 +55,13 @@ These codes can be output together in order to change fore- and back-ground colo
 
 A simple example of red text:
 
-```cpp
+```bash
 printf "\033[91mThis is red text\033[0m"
 ```
 
 An example of red text on a white background:
 
-```cpp
+```bash
 printf "\033[91m\033[107mThis is red text on a white background\033[0m"
 ```
 
@@ -73,14 +71,14 @@ This is a little cumbersome so I've created some simple subroutines that provide
 
 The following helper functions allow you to do stuff like:
 
-```cpp
+```bash
 WriteLine "This is red text" "Red"
 WriteLine "This is red text on a white background" "Red" "White"
 ```
 
 Much easier.
 
-```cpp
+```bash
 useColor="true" # Set to false if you find your environment just doesn't handle colors well
 
 # Returns a color code for the given foreground/background colors
@@ -215,7 +213,7 @@ In many Linux and Unix distros the terminal is black background, white text. On 
 
 What I do is assume that if we're on a mac, then we can test directly, otherwise we assume white on black. I then also try to stick to default colors, and where I want a bit of color, I'll stick to some predefined colors I know will work well anywhere.
 
-```cpp
+```bash
 # Gets the terminal background color. It's a very naive guess 
 # returns an RGB triplet, values from 0 - 64K
 function getBackground () {
@@ -254,7 +252,7 @@ function isDarkMode () {
 
 Once we have a rough idea of what we're dealing with, I'll do:
 
-```cpp
+```bash
 darkmode=$(isDarkMode)
 
 # Setup some predefined colours. Note that we can't reliably determine the background 
@@ -280,7 +278,7 @@ fi
 
 and to use these:
 
-```cpp
+```bash
 WriteLine "Predefined colors on default background"
 WriteLine
 
@@ -315,7 +313,7 @@ On a macOS terminal:
 
 Things are a bit murky so let's add one more function that will provide a contrasting foreground on whatever background we choose.
 
-```cpp
+```bash
 # Returns the name of a color that will providing a contrasting foreground
 # color for the given background color. This function assumes $darkmode has
 # been set globally.
@@ -377,7 +375,7 @@ function ContrastForeground () {
 
 Then, in the `Color `subroutine, we can do:
 
-```cpp
+```bash
 function Color () {
 
     local foreground=$1
@@ -395,7 +393,7 @@ function Color () {
 
 and to make our text with background color a little more legible, we do:
 
-```cpp
+```bash
 WriteLine
 WriteLine "Default contrasting color on predefined background"
 WriteLine
